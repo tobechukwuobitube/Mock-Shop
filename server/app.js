@@ -12,4 +12,8 @@ app.get('/', (request, response) => {
   });
 });
 
+import indexRoutes from './routes';
+
+app.use(indexRoutes);
+
 export default app;

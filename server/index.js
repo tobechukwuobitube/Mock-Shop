@@ -3,7 +3,6 @@ import app from './app';
 
 dotenv.config();
 
-// const debug = Debug('app');
 const port = process.env.PORT || 8001;
 
 app.listen(port, () => {
