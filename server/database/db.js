@@ -6,7 +6,8 @@ const createTables = () => {
   DROP TABLE IF EXISTS accounts CASCADE;
   DROP TABLE IF EXISTS transactions CASCADE;
   CREATE TABLE users(
-    "id" UUID NOT NULL PRIMARY KEY,
+    "id" serial NOT NULL PRIMARY KEY,
+    "user_id" uuid DEFAULT uuid_generate_v4() NOT NULL,
     "email" VARCHAR NOT NULL UNIQUE,
     "firstName" VARCHAR NOT NULL,
     "lastName" VARCHAR NOT NULL,
