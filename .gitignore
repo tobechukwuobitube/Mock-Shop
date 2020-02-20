@@ -70,6 +70,19 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# next.js build output
+.next
+
+# editorconfig
+.editorconfig
+
+# ES5 build folder
+build/
+
+# coverage lcov output
+coverage.lcov
+
 .env.test
 
 # parcel-bundler cache (https://parceljs.org/)
