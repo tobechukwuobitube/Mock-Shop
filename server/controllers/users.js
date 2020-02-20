@@ -43,15 +43,18 @@ class userController {
       password: hashedPassword
     };
 
+    const token = helpers.issueToken(newUser);
+
     const query = `INSERT INTO users ("email", "firstName", "lastName", "password", "type", "isAdmin")
     VALUES('${newUser.email}','${newUser.firstName}','${newUser.lastName}','${newUser.password}', 'customer', 'false') returning * `;
     return connection
       .query(query)
       .then(result => {
+        const token = helpers.issueToken(result.rows[0]);
         if (result.rowCount >= 1) {
           return response
             .status(201)
-            .send({ status: 201, message: 'Sign up was successful' });
+            .send({ status: 201, message: 'Sign up was successful', token });
         }
 
         return response
@@ -69,6 +72,63 @@ class userController {
           status: 500,
           message:
             'Error creating account, ensure you provide valid credentials'
+        });
+      });
+  }
+
+  static signin(request, response) {
+    const { email, password } = request.body;
+    if (!email || !password) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Email or Password is not provided'
+      });
+    }
+
+    const { value, error } = validate.signin(request.body);
+    if (error) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Invalid input, ensure input values are/is correct'
+      });
+    }
+
+    const existingUser = {
+      email: value.email.toLowerCase(),
+      password: value.password
+    };
+
+    const query = `SELECT * FROM users WHERE email='${existingUser.email}' `;
+    return connection
+      .query(query)
+      .then(result => {
+        if (
+          !helpers.comparePassword(
+            request.body.password,
+            result.rows[0].password
+          )
+        ) {
+          return response
+            .status(400)
+            .send({ message: 'The credentials you provided is incorrect' });
+        }
+        const token = helpers.issueToken(result.rows[0]);
+        if (result.rowCount === 0) {
+          response
+            .status(404)
+            .send({ status: 404, error: 'Account does not exist' });
+        }
+        return response.status(200).send({
+          status: 200,
+          message: 'You are successfully logged in',
+          token
+        });
+      })
+      .catch(error => {
+        console.log(error);
+        response.status(500).send({
+          status: 500,
+          error: 'Error logging in, ensure you provide valid credentials'
         });
       });
   }

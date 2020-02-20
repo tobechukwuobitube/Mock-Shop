@@ -12,10 +12,10 @@ export default {
   comparePassword(plainPassword, encryptedPassword) {
     return bcrypt.compareSync(plainPassword, encryptedPassword);
   },
-  issueToken({ id, email, firstName, lastName, type, isAdmin }) {
+  issueToken({ user_id, email, firstName, lastName, type, isAdmin }) {
     const token = jwt.sign(
       {
-        id,
+        user_id,
         email,
         firstName,
         lastName,

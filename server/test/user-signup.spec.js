@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 describe('POST /auth/signup', () => {
   it('should create a new user', done => {
     const newUser = {
-      email: 'johndoelo1234567@gmail.com',
+      email: 'johndoe1@gmail.com',
       firstName: 'John',
       lastName: 'Doe',
       password: 'password',
