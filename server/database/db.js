@@ -16,16 +16,16 @@ const createTables = () => {
     "isAdmin" BOOLEAN
   );
   CREATE TABLE products(
-    "id" UUID NOT NULL PRIMARY KEY,
+    "id" serial NOT NULL PRIMARY KEY,
+    "user_id" uuid DEFAULT uuid_generate_v4() NOT NULL,
     "name" VARCHAR NOT NULL,
-    "type" VARCHAR NOT NULL,
     "price" FLOAT NOT NULL,
     "status" TEXT NOT NULL
   );
   CREATE TABLE cart(
-    "id" UUID NOT NULL PRIMARY KEY,
+    "id" serial NOT NULL PRIMARY KEY,
+    "user_id" uuid DEFAULT uuid_generate_v4() NOT NULL,
     "name" VARCHAR NOT NULL,
-    "type" VARCHAR NOT NULL,
     "quantity" BIGINT NOT NULL,
     "price" FLOAT NOT NULL
   );
