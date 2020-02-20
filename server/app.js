@@ -12,9 +12,4 @@ app.get('/', (request, response) => {
   });
 });
 
-app.use((error, request, response, next) => {
-  if (!error) return next();
-  return response.status(500).send('Internal Server Error');
-});
-
 export default app;
