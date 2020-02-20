@@ -3,8 +3,8 @@ import client from './connection';
 const createTables = () => {
   const tables = `
   DROP TABLE IF EXISTS users CASCADE;
-  DROP TABLE IF EXISTS accounts CASCADE;
-  DROP TABLE IF EXISTS transactions CASCADE;
+  DROP TABLE IF EXISTS products CASCADE;
+  DROP TABLE IF EXISTS cart CASCADE;
   CREATE TABLE users(
     "id" serial NOT NULL PRIMARY KEY,
     "user_id" uuid DEFAULT uuid_generate_v4() NOT NULL,
