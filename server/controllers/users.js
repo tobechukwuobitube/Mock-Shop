@@ -102,6 +102,11 @@ class userController {
     return connection
       .query(query)
       .then(result => {
+        if (result.rowCount === 0) {
+          response
+            .status(404)
+            .send({ status: 404, error: 'Account does not exist' });
+        }
         if (
           !helpers.comparePassword(
             request.body.password,
@@ -113,11 +118,6 @@ class userController {
             .send({ message: 'The credentials you provided is incorrect' });
         }
         const token = helpers.issueToken(result.rows[0]);
-        if (result.rowCount === 0) {
-          response
-            .status(404)
-            .send({ status: 404, error: 'Account does not exist' });
-        }
         return response.status(200).send({
           status: 200,
           message: 'You are successfully logged in',
