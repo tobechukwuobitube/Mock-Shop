@@ -4,8 +4,10 @@
   "description": "a simple shopping server",
   "main": "index.js",
   "scripts": {
+    "start": "node ./build/index.js",
     "test": "nyc mocha --require @babel/register ./server/test --exit",
     "dev": "nodemon --exec babel-node ./server/index.js",
+    "build": "babel server -d build && npm run create-table",
     "create-table": "babel-node ./server/database/db.js --exit"
   },
   "repository": {
