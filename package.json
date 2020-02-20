@@ -1,0 +1,45 @@
+{
+  "name": "mock-shop",
+  "version": "1.0.0",
+  "description": "a simple shopping server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --exec babel-node ./server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tobechukwuobitube/mock-shop-1.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express.js",
+    "server",
+    "restful",
+    "api"
+  ],
+  "author": "Tobechukwu Obitube",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tobechukwuobitube/mock-shop-1/issues"
+  },
+  "homepage": "https://github.com/tobechukwuobitube/mock-shop-1#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/register": "^7.8.3",
+    "@babel/runtime": "^7.8.4",
+    "babel-loader": "^8.0.6",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1"
+  }
+}
