@@ -4,7 +4,7 @@ import connection from '../database/connection';
 
 class productController {
   static create(request, response) {
-    const { name, price } = request.body;
+    const { name, description, category, price, imageUrl } = request.body;
 
     if (!name) {
       return response.status(400).json({
@@ -22,10 +22,13 @@ class productController {
 
     const newProduct = {
       name,
-      price
+      description,
+      category,
+      price,
+      imageUrl
     };
 
-    const query = `INSERT INTO products ("name", "price", "status") VALUES('${newProduct.name}','${newProduct.price}', 'available') returning * `;
+    const query = `INSERT INTO products ("name",  "description", "category" ,"price", "imageUrl", "inStock") VALUES('${newProduct.name}','${newProduct.description}','${newProduct.category}','${newProduct.price}', '${newProduct.imageUrl}', 'true') returning * `;
     return connection
       .query(query)
       .then(result => {
@@ -38,6 +41,7 @@ class productController {
         }
       })
       .catch(error => {
+        console.log(error);
         return response.status(500).send({
           status: 500,
           error:
@@ -111,7 +115,7 @@ class productController {
 
   static editProduct(request, response) {
     const { product_id } = request.params;
-    const { name, price } = request.body;
+    const { name, description, category, price, imageUrl } = request.body;
     const query = `SELECT * FROM products WHERE "product_id"='${product_id}'`;
     return connection.query(query).then(result => {
       if (result.rowCount === 0) {
@@ -121,7 +125,7 @@ class productController {
         });
       }
 
-      const updateQuery = `UPDATE products SET "name"= '${name}', "price"='${price}' WHERE "product_id"='${product_id}'`;
+      const updateQuery = `UPDATE products SET "name"='${name}', "description"='${description}', "category"='${category}', "price"='${price}', "imageUrl"='${imageUrl}' WHERE "product_id"='${product_id}'`;
       return connection
         .query(updateQuery)
         .then(() =>
@@ -152,7 +156,7 @@ class productController {
         });
       }
 
-      const updateQuery = `UPDATE products SET "status"='sold' WHERE "product_id"='${product_id}'`;
+      const updateQuery = `UPDATE products SET "inStock"='false' WHERE "product_id"='${product_id}'`;
       return connection
         .query(updateQuery)
         .then(() =>
