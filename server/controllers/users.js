@@ -45,8 +45,8 @@ class userController {
 
     const token = helpers.issueToken(newUser);
 
-    const query = `INSERT INTO users ("email", "firstName", "lastName", "password", "type", "isAdmin")
-    VALUES('${newUser.email}','${newUser.firstName}','${newUser.lastName}','${newUser.password}', 'customer', 'false') returning * `;
+    const query = `INSERT INTO users ("email", "firstName", "lastName", "password", "isAdmin")
+    VALUES('${newUser.email}','${newUser.firstName}','${newUser.lastName}','${newUser.password}', 'false') returning * `;
     return connection
       .query(query)
       .then(result => {
