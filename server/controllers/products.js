@@ -108,6 +108,46 @@ class productController {
         });
       });
   }
+
+  static editProduct(request, response) {
+    const { product_id } = request.params;
+    const { name, price } = request.body;
+    const query = `SELECT * FROM products WHERE "product_id"='${product_id}'`;
+    return connection.query(query).then(result => {
+      if (result.rowCount === 0) {
+        response.status(404).send({
+          status: 404,
+          error: 'Product does not exist'
+        });
+      }
+
+      const updateQuery = `UPDATE products SET "name"= '${name}', "price"='${price}' WHERE "product_id"='${product_id}'`;
+      return connection
+        .query(updateQuery)
+        .then(() =>
+          response.status(200).send({
+            status: 200,
+            message: 'Product successfully updated',
+            data: result.rows[0]
+          })
+        )
+        .catch(error => {
+          console.log(error);
+          response.status(500).send({
+            status: 500,
+            error: 'Error updating the specific product'
+          });
+        });
+    });
+    // .catch(error => {
+    //   console.log(error);
+    //   response.status(500).send({
+    //     status: 500,
+    //     error:
+    //       'Error updating the specific product, ensure you provide valid credentials'
+    //   });
+    // });
+  }
 }
 
 export default productController;
