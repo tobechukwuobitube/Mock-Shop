@@ -45,6 +45,31 @@ class productController {
         });
       });
   }
+
+  static getAllProducts(request, response) {
+    const query = 'SELECT * FROM products';
+    return connection
+      .query(query)
+      .then(result => {
+        if (result.rowCount === 0) {
+          response.status(404).send({
+            status: 404,
+            error: 'There are no products records'
+          });
+        }
+        return response.status(200).send({
+          status: 200,
+          message: 'Products successfully retrieved',
+          data: result.rows
+        });
+      })
+      .catch(error => {
+        response.status(500).send({
+          status: 500,
+          error: 'Error fetching all products'
+        });
+      });
+  }
 }
 
 export default productController;
