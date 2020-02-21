@@ -146,13 +146,12 @@ describe('Edit Products', () => {
   it('should edit a specific product', done => {
     chai
       .request(app)
-      .patch(`/api/v1/products/4f98a7ad-1d0e-4c67-be99-f6dff59c589a`)
+      .patch(`/api/v1/products/4f98a7ad-1d0e-4c67-be99-f6dff59c589a/edit`)
       .send({
         name: 'bag',
         price: 44500.0
       })
       .end((error, response) => {
-        console.log(response);
         response.body.should.be.a('object');
         response.should.have.status(200);
         done();
@@ -161,7 +160,30 @@ describe('Edit Products', () => {
   it('should throw a 404 error if product is not found', done => {
     chai
       .request(app)
-      .patch(`/api/v1/products/bd96a69f-7ffd-44c0-9453-ceed8ccc9775`)
+      .patch(`/api/v1/products/bd96a69f-7ffd-44c0-9453-ceed8ccc9775/edit`)
+      .end((error, response) => {
+        response.body.should.be.a('object');
+        response.should.have.status(404);
+        done();
+      });
+  });
+});
+
+describe('Sell Products', () => {
+  it('should sell a specific product', done => {
+    chai
+      .request(app)
+      .patch(`/api/v1/products/01c9716b-c0ce-4fbc-acf0-18500389329f/sell`)
+      .end((error, response) => {
+        response.body.should.be.a('object');
+        response.should.have.status(200);
+        done();
+      });
+  });
+  it('should throw a 404 error if product is not found', done => {
+    chai
+      .request(app)
+      .patch(`/api/v1/products/bd96a69f-7ffd-44c0-9453-ceed8ccc9775/sell`)
       .end((error, response) => {
         response.body.should.be.a('object');
         response.should.have.status(404);
