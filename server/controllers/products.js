@@ -139,14 +139,37 @@ class productController {
           });
         });
     });
-    // .catch(error => {
-    //   console.log(error);
-    //   response.status(500).send({
-    //     status: 500,
-    //     error:
-    //       'Error updating the specific product, ensure you provide valid credentials'
-    //   });
-    // });
+  }
+
+  static sellProduct(request, response) {
+    const { product_id } = request.params;
+    const query = `SELECT * FROM products WHERE "product_id"='${product_id}'`;
+    return connection.query(query).then(result => {
+      if (result.rowCount === 0) {
+        response.status(404).send({
+          status: 404,
+          error: 'Product does not exist'
+        });
+      }
+
+      const updateQuery = `UPDATE products SET "status"='sold' WHERE "product_id"='${product_id}'`;
+      return connection
+        .query(updateQuery)
+        .then(() =>
+          response.status(200).send({
+            status: 200,
+            message: 'Product is sold out',
+            data: result.rows[0]
+          })
+        )
+        .catch(error => {
+          console.log(error);
+          response.status(500).send({
+            status: 500,
+            error: 'Error selling the specific product'
+          });
+        });
+    });
   }
 }
 
