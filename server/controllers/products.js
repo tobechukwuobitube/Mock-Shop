@@ -70,6 +70,44 @@ class productController {
         });
       });
   }
+
+  static deleteProduct(request, response) {
+    const { product_id } = request.params;
+    const query = `SELECT * FROM products WHERE "product_id"='${product_id}'`;
+    return connection
+      .query(query)
+      .then(result => {
+        if (result.rowCount === 0) {
+          response.status(404).send({
+            status: 404,
+            error: 'Product does not exist'
+          });
+        }
+        const deleteQuery = `DELETE FROM products WHERE "product_id"='${result.rows[0].product_id}'`;
+        return connection
+          .query(deleteQuery)
+          .then(() =>
+            response.status(200).send({
+              status: 200,
+              message: 'Product successfully deleted',
+              data: result.rows[0]
+            })
+          )
+          .catch(error => {
+            response.status(500).send({
+              status: 500,
+              error: 'Error deleting the specific product'
+            });
+          });
+      })
+      .catch(error => {
+        response.status(500).send({
+          status: 500,
+          error:
+            'Error deleting the specific product, ensure you provide valid credentials'
+        });
+      });
+  }
 }
 
 export default productController;
