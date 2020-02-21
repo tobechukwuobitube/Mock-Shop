@@ -17,14 +17,14 @@ const createTables = () => {
   );
   CREATE TABLE products(
     "id" serial NOT NULL PRIMARY KEY,
-    "user_id" uuid DEFAULT uuid_generate_v4() NOT NULL,
+    "product_id" uuid DEFAULT uuid_generate_v4() NOT NULL,
     "name" VARCHAR NOT NULL,
     "price" FLOAT NOT NULL,
     "status" TEXT NOT NULL
   );
   CREATE TABLE cart(
     "id" serial NOT NULL PRIMARY KEY,
-    "user_id" uuid DEFAULT uuid_generate_v4() NOT NULL,
+    "product_id" uuid DEFAULT uuid_generate_v4() NOT NULL,
     "name" VARCHAR NOT NULL,
     "quantity" BIGINT NOT NULL,
     "price" FLOAT NOT NULL
